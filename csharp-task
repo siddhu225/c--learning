@@ -1,0 +1,71 @@
+Find out best possible combination to fill the space using standard blocks
+
+ 
+
+Inputs/arguments:
+available space (int)
+standard blocks (List)
+
+ 
+
+Example:
+Input
+
+
+	
+available space 1000
+	standard blocks 300, 400, 600
+
+output
+
+Best possible combination
+{600,400}
+{400,300,300}
+ 
+If none of the combination fill the entire space then will consider least space left combination is best possible.
+
+
+
+
+
+using System.IO;
+using System;
+using System.Collections.Generic;
+
+ 
+
+class Program
+{
+    public static void calcSUM(int[] c, int i, int t, IList<int> cur)
+    {
+        IList<IList<int>> res = new List<IList<int>>();
+        int iterate = 0;
+        if (t == 0)
+        {
+            res.Add(new List<int>());
+            
+            foreach (var n in cur)
+                res[res.Count - 1].Add(n);
+            foreach(var item in res[iterate])
+                Console.Write(item);
+            iterate++;
+        }
+        else if (t < 0)
+            return;
+        
+        for (int j = i; j < c.Length; j++)
+        {
+            cur.Add(c[j]);
+            
+            calcSUM(c, j, t - c[j], cur);
+            
+            cur.RemoveAt(cur.Count - 1);
+        }
+    }
+    static void Main()
+    {
+        int availableSpace = 1000;
+        int[] blocks = {  300, 400, 600 };
+        calcSUM(blocks, 0, availableSpace, new List<int>());
+    }
+}
